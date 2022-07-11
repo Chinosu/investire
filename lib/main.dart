@@ -34,52 +34,51 @@ class _InvestireState extends State<Investire> {
 
   @override
   void initState() {
+    // box.erase();
     /// Retrieve _boughtItems from storage
-    List<String> boughtList = lineSplitter.convert(box.read('bought') ?? '');
-    for (var i = 0; i < (boughtList.length / 4).floor(); i += 4) {
+    for (var i = 0; box.read('bought-$i') != null; i++) {
+      var boughtList = lineSplitter.convert(box.read('bought-$i'));
       _boughtItems.add(
         BoughtItem(
-            name: boughtList[i],
-            boughtPrice: int.parse(boughtList[i + 1]),
-            boughtWhen: DateTime.parse(boughtList[i + 2]),
-            comments: boughtList[i + 3]),
+          name: boughtList[0],
+          boughtPrice: int.parse(boughtList[1]),
+          boughtWhen: DateTime.parse(boughtList[2]),
+          comments: boughtList[3],
+        ),
       );
-      _boughtItems.sort((a, b) => a.name.compareTo(b.name));
     }
-
     /// Retrieve _soldItems from storage
-    List<String> soldList = lineSplitter.convert(box.read('sold') ?? '');
-    for (var i = 0; i < (soldList.length / 6).floor(); i += 6) {
+    for (var i = 0; box.read('sold-$i') != null; i++) {
+      var soldList = lineSplitter.convert(box.read('sold-$i'));
       _soldItems.add(
         SoldItem(
-            name: soldList[i],
-            boughtPrice: int.parse(soldList[i + 1]),
-            soldPrice: int.parse(soldList[i + 2]),
-            boughtWhen: DateTime.parse(soldList[i + 3]),
-            soldWhen: DateTime.parse(soldList[i + 4]),
-            comments: soldList[i + 5]),
+          name: soldList[0],
+          boughtPrice: int.parse(soldList[1]),
+          soldPrice: int.parse(soldList[2]),
+          boughtWhen: DateTime.parse(soldList[3]),
+          soldWhen: DateTime.parse(soldList[4]),
+          comments: soldList[5],
+        ),
       );
-      _soldItems.sort((a, b) => a.name.compareTo(b.name));
     }
+    _soldItems.sort((a, b) => a.name.compareTo(b.name));
     super.initState();
   }
 
   void save() {
     box.erase();
+
     /// Save _boughtItems to storage
-    String boughtString = '';
-    for (var element in _boughtItems) {
-      boughtString +=
-      '${element.name}\n${element.boughtPrice.toString()}\n${element.boughtWhen.toString()}\n${element.comments}\n';
+    for (var i = 0; i < _boughtItems.length; i++) {
+      box.write('bought-$i',
+          '${_boughtItems[i].name}\n${_boughtItems[i].boughtPrice}\n${_boughtItems[i].boughtWhen}\n${_boughtItems[i].comments}\n');
     }
-    box.write('bought', boughtString);
+
     /// Save _soldItems to storage
-    String soldString = '';
-    for (var element in _soldItems) {
-      soldString +=
-      '${element.name}\n${element.boughtPrice.toString()}\n${element.soldPrice.toString()}\n${element.boughtWhen.toString()}\n${element.soldWhen.toString()}\n${element.comments}\n';
+    for (var i = 0; i < _soldItems.length; i++) {
+      box.write('sold-$i',
+          '${_soldItems[i].name}\n${_soldItems[i].boughtPrice.toString()}\n${_soldItems[i].soldPrice.toString()}\n${_soldItems[i].boughtWhen.toString()}\n${_soldItems[i].soldWhen.toString()}\n${_soldItems[i].comments}\n');
     }
-    box.write('sold', soldString);
   }
 
   @override
