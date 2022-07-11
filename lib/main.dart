@@ -341,7 +341,7 @@ class _InvestireState extends State<Investire> {
               dense: true,
               onTap: () {},
               subtitle: Text(
-                  'Bought for ${_soldItems[index].boughtPrice}ᴘ on ${DateFormat('dd/MM/yyyy').format(_soldItems[index].boughtWhen)}\nSold for ${_soldItems[index].soldPrice}ᴘ on ${DateFormat('dd/mm/yyyy').format(_soldItems[index].soldWhen)}\n${_soldItems[index].profitPercentPerDay}% daily profit (${_soldItems[index].profitPercent}% in ${_soldItems[index].daysTaken}${_soldItems[index].daysTaken == 1 ? ' day' : ' days'})\n${_soldItems[index].comments == '' ? '' : 'Comments: ${_soldItems[index].comments}'}'),
+                  'Bought for ${_soldItems[index].boughtPrice}ᴘ on ${DateFormat('dd/MM/yyyy').format(_soldItems[index].boughtWhen)}\nSold for ${_soldItems[index].soldPrice}ᴘ on ${DateFormat('dd/MM/yyyy').format(_soldItems[index].soldWhen)}\n${_soldItems[index].profitPercentPerDay}% daily profit (${_soldItems[index].profitPercent}% in ${_soldItems[index].daysTaken}${_soldItems[index].daysTaken == 1 ? ' day' : ' days'})\n${_soldItems[index].comments == '' ? '' : 'Comments: ${_soldItems[index].comments}'}'),
               trailing: TextButton(
                 onPressed: null,
                 onLongPress: () {
